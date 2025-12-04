@@ -4,6 +4,7 @@ import { Inter, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { UMNHeader } from "@/components/umn-header"
 import { UMNFooter } from "@/components/umn-footer"
+import { DisclaimerModal } from "@/components/disclaimer-modal"
 import "./globals.css"
 
 const _inter = Inter({ subsets: ["latin"] })
@@ -36,6 +37,7 @@ export default function RootLayout({
           </main>
           <UMNFooter />
         </div>
+        <DisclaimerModal />
         <Analytics />
       </body>
     </html>
