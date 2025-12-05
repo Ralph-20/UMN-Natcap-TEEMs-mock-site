@@ -197,8 +197,8 @@ const platformOptions = [
   { 
     name: "Vercel", 
     url: "https://vercel.com", 
-    description: "Optimized for Next.js, excellent DX, generous free tier",
-    strengths: ["Next.js optimization", "Global CDN & firewall", "Edge functions"],
+    description: "Full-stack platform with Next.js optimization, AI SDK, and backend primitives",
+    strengths: ["Global edge network & firewall", "Edge functions", "Cron, queues, KV, AI SDK"],
     freeHighlight: "100GB bandwidth/mo"
   },
   { 
@@ -211,7 +211,7 @@ const platformOptions = [
   { 
     name: "Cloudflare Pages", 
     url: "https://pages.cloudflare.com", 
-    description: "Global edge network with very generous free tier",
+    description: "Global edge network with generous free tier",
     strengths: ["Global CDN & firewall", "Unlimited bandwidth (free)", "Workers integration"],
     freeHighlight: "Unlimited bandwidth"
   },
@@ -1243,13 +1243,6 @@ export default function HostingComparisonPage() {
                 </div>
               </a>
             ))}
-          </div>
-          
-          <div className="mt-8 p-4 rounded-lg bg-[#7A0019]/5 border border-[#7A0019]/20 text-center">
-            <p className="text-sm text-slate-700 dark:text-slate-300">
-              <strong className="text-[#7A0019] dark:text-[#FFCC33]">Recommendation:</strong> For most academic projects, any of these platforms will work well. 
-              Choose based on your team&apos;s familiarity, specific feature needs, and institutional preferences.
-            </p>
           </div>
         </div>
       </section>

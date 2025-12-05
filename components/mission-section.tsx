@@ -28,6 +28,7 @@ const features = [
 
 export function MissionSection() {
   const [isVisible, setIsVisible] = useState(false)
+  const [entranceComplete, setEntranceComplete] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -35,6 +36,8 @@ export function MissionSection() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
+          // Clear the delay after entrance animations complete (last card delay + animation duration)
+          setTimeout(() => setEntranceComplete(true), 500 + 500)
         }
       },
       { threshold: 0.1 },
@@ -96,14 +99,14 @@ export function MissionSection() {
               <div
                 key={feature.title}
                 className={`group p-6 bg-card rounded-xl border border-border hover:border-[#7A0019]/30 shadow-sm hover:shadow-2xl hover:shadow-[#7A0019]/10 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] active:scale-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{ transitionDelay: isVisible ? `${index * 100 + 200}ms` : "0ms" }}
+                style={{ transitionDelay: entranceComplete ? "0ms" : `${index * 100 + 200}ms` }}
               >
                 <div className="relative w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-[#7A0019]/30 group-hover:scale-110 group-hover:rotate-6 transition-[transform,box-shadow] duration-300 ease-out">
                   {/* Background layer that fades out */}
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#7A0019]/10 to-[#7A0019]/5 transition-opacity duration-700 ease-in-out group-hover:opacity-0" />
                   {/* Hover background layer that fades in */}
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#7A0019] to-[#5a0013] opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-100" />
-                  <feature.icon className="relative z-10 h-6 w-6 text-[#7A0019] group-hover:text-white group-hover:scale-110 transition-[transform] duration-300 ease-out [transition:transform_300ms_ease-out,color_700ms_ease-in-out]" />
+                  <feature.icon className="relative z-10 h-6 w-6 text-[#7A0019] group-hover:text-white group-hover:scale-110 transition-[transform,color] ease-out [transition-duration:300ms,700ms]" />
                 </div>
                 <h4 className="font-semibold text-foreground mb-2 group-hover:text-[#7A0019] transition-colors duration-500 ease-in-out">
                   {feature.title}
