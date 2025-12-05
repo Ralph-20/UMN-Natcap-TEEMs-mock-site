@@ -150,57 +150,92 @@ const concepts: Record<ConceptKey, {
   }
 }
 
-// Comparison data with 4 tiers: GitHub Free, GitHub Team, Vercel Hobby, Vercel Pro
+// Comparison data: Static-only vs Full-featured platforms
 const comparisonFeatures = [
   {
-    category: "Cost & Limits",
+    category: "Typical Costs & Limits",
     features: [
-      { name: "Price", githubFree: "Free", githubTeam: "$4/user/mo", vercelHobby: "Free", vercelPro: "$20/user/mo" },
-      { name: "Bandwidth", githubFree: "100 GB/mo", githubTeam: "100 GB/mo", vercelHobby: "100 GB/mo", vercelPro: "1 TB/mo" },
-      { name: "Build Minutes", githubFree: "2,000/mo", githubTeam: "3,000/mo", vercelHobby: "6,000/mo", vercelPro: "24,000/mo" },
-      { name: "Team Members", githubFree: "Unlimited", githubTeam: "Unlimited", vercelHobby: "1", vercelPro: "Unlimited" },
-      { name: "Concurrent Builds", githubFree: "1", githubTeam: "20", vercelHobby: "1", vercelPro: "12" },
+      { name: "Free Tier", staticOnly: "Yes", fullFeatured: "Yes" },
+      { name: "Bandwidth (Free)", staticOnly: "100 GB/mo", fullFeatured: "100 GB/mo" },
+      { name: "Build Minutes (Free)", staticOnly: "2,000-3,000/mo", fullFeatured: "6,000+/mo" },
+      { name: "Pro Tier Pricing", staticOnly: "$4-10/user/mo", fullFeatured: "$15-20/user/mo" },
     ]
   },
   {
     category: "Rendering Capabilities",
     features: [
-      { name: "Static Generation (SSG)", githubFree: true, githubTeam: true, vercelHobby: true, vercelPro: true },
-      { name: "Server-Side Rendering (SSR)", githubFree: false, githubTeam: false, vercelHobby: true, vercelPro: true },
-      { name: "Incremental Static Regeneration", githubFree: false, githubTeam: false, vercelHobby: true, vercelPro: true },
-      { name: "API Routes / Serverless", githubFree: false, githubTeam: false, vercelHobby: true, vercelPro: true },
-      { name: "Edge Functions", githubFree: false, githubTeam: false, vercelHobby: true, vercelPro: true },
+      { name: "Static Generation (SSG)", staticOnly: true, fullFeatured: true },
+      { name: "Server-Side Rendering (SSR)", staticOnly: false, fullFeatured: true },
+      { name: "Incremental Static Regeneration", staticOnly: false, fullFeatured: true },
+      { name: "API Routes / Serverless Functions", staticOnly: false, fullFeatured: true },
+      { name: "Edge Functions", staticOnly: false, fullFeatured: true },
     ]
   },
   {
     category: "Developer Experience",
     features: [
-      { name: "Zero-Config Deployment", githubFree: false, githubTeam: false, vercelHobby: true, vercelPro: true },
-      { name: "Preview Deployments", githubFree: false, githubTeam: false, vercelHobby: true, vercelPro: true },
-      { name: "Instant Rollbacks", githubFree: false, githubTeam: false, vercelHobby: true, vercelPro: true },
-      { name: "Built-in Analytics", githubFree: false, githubTeam: false, vercelHobby: true, vercelPro: true },
-      { name: "Image Optimization", githubFree: "Manual", githubTeam: "Manual", vercelHobby: "Automatic", vercelPro: "Automatic" },
-      { name: "Password Protection", githubFree: false, githubTeam: false, vercelHobby: false, vercelPro: true },
+      { name: "Git-based Deployments", staticOnly: true, fullFeatured: true },
+      { name: "Preview Deployments", staticOnly: "Limited", fullFeatured: true },
+      { name: "Instant Rollbacks", staticOnly: false, fullFeatured: true },
+      { name: "Built-in Analytics", staticOnly: false, fullFeatured: true },
+      { name: "Automatic Image Optimization", staticOnly: false, fullFeatured: true },
     ]
   },
   {
     category: "Infrastructure",
     features: [
-      { name: "Global CDN", githubFree: "US-focused", githubTeam: "US-focused", vercelHobby: "300+ worldwide", vercelPro: "300+ worldwide" },
-      { name: "Custom Domains", githubFree: true, githubTeam: true, vercelHobby: true, vercelPro: true },
-      { name: "SSL Certificates", githubFree: true, githubTeam: true, vercelHobby: true, vercelPro: true },
-      { name: "DDoS Protection", githubFree: true, githubTeam: true, vercelHobby: true, vercelPro: true },
-      { name: "Firewall Rules", githubFree: false, githubTeam: false, vercelHobby: false, vercelPro: true },
+      { name: "Global CDN", staticOnly: "Limited regions", fullFeatured: "200-300+ PoPs" },
+      { name: "Custom Domains", staticOnly: true, fullFeatured: true },
+      { name: "SSL Certificates", staticOnly: true, fullFeatured: true },
+      { name: "DDoS Protection", staticOnly: true, fullFeatured: true },
     ]
   }
 ]
 
-// Alternative platforms
-const alternativePlatforms = [
-  { name: "Netlify", url: "https://netlify.com", description: "Similar to Vercel with excellent CI/CD" },
-  { name: "Cloudflare Pages", url: "https://pages.cloudflare.com", description: "Fast global edge network, generous free tier" },
-  { name: "AWS Amplify", url: "https://aws.amazon.com/amplify", description: "Full AWS integration, enterprise-grade" },
-  { name: "Railway", url: "https://railway.app", description: "Simple deployment with database support" },
+// Platform options
+const platformOptions = [
+  { 
+    name: "Vercel", 
+    url: "https://vercel.com", 
+    description: "Optimized for Next.js, excellent DX, generous free tier",
+    strengths: ["Next.js optimization", "Preview deployments", "Edge functions"],
+    freeHighlight: "100GB bandwidth/mo"
+  },
+  { 
+    name: "Netlify", 
+    url: "https://netlify.com", 
+    description: "Pioneer of JAMstack, excellent CI/CD and form handling",
+    strengths: ["Form handling", "Split testing", "Identity/auth"],
+    freeHighlight: "100GB bandwidth/mo"
+  },
+  { 
+    name: "Cloudflare Pages", 
+    url: "https://pages.cloudflare.com", 
+    description: "Global edge network with very generous free tier",
+    strengths: ["Global CDN", "Unlimited bandwidth (free)", "Workers integration"],
+    freeHighlight: "Unlimited bandwidth"
+  },
+  { 
+    name: "AWS Amplify", 
+    url: "https://aws.amazon.com/amplify", 
+    description: "Full AWS integration, enterprise-grade security",
+    strengths: ["AWS ecosystem", "Enterprise features", "Backend integration"],
+    freeHighlight: "12 months free tier"
+  },
+  { 
+    name: "GitHub Pages", 
+    url: "https://pages.github.com", 
+    description: "Simple static hosting, tight GitHub integration",
+    strengths: ["Zero config for static", "GitHub Actions CI", "Free for public repos"],
+    freeHighlight: "100GB bandwidth/mo"
+  },
+  { 
+    name: "Render", 
+    url: "https://render.com", 
+    description: "Simple full-stack platform with database support",
+    strengths: ["Easy databases", "Background workers", "Private networking"],
+    freeHighlight: "Static sites free"
+  },
 ]
 
 // FAQ / Questions data
@@ -214,16 +249,16 @@ const faqItems: Record<FAQKey, {
   considerations: string[]
 }> = {
   justVercel: {
-    question: "Can we just deploy our existing Quarto site to Vercel?",
+    question: "Can we deploy our existing Quarto site to a modern platform?",
     icon: <Zap className="h-5 w-5" />,
     shortAnswer: "Yes! This is the simplest option—no code changes required.",
-    details: "You don't need to adopt Next.js or any new framework. Quarto generates static HTML, and Vercel can host static sites directly. The entire process takes under 10 minutes: connect your GitHub repo to Vercel, and it automatically deploys whenever you push changes. You keep your exact same workflow, but gain Vercel's global CDN, automatic HTTPS, and preview deployments.",
+    details: "You don't need to adopt Next.js or any new framework. Quarto generates static HTML, and most modern platforms (Vercel, Netlify, Cloudflare Pages) can host static sites directly. The entire process takes under 10 minutes: connect your GitHub repo to the platform, and it automatically deploys whenever you push changes. You keep your exact same workflow, but gain a global CDN, automatic HTTPS, and preview deployments.",
     considerations: [
-      "Setup time: under 10 minutes",
+      "Setup time: under 10 minutes on most platforms",
       "No code changes to your Quarto project",
       "Automatic deployments on every git push",
       "Instant global CDN, SSL, and preview URLs for free",
-      "Can always add Next.js features later if needed"
+      "Can always add framework features later if needed"
     ]
   },
   quarto: {
@@ -289,8 +324,8 @@ const faqItems: Record<FAQKey, {
   cms: {
     question: "What if we want a content management system (CMS) later?",
     icon: <Layers className="h-5 w-5" />,
-    shortAnswer: "Modern platforms like Vercel integrate natively with popular CMS options.",
-    details: "If you ever want non-technical team members to edit content through a visual interface (instead of code), Vercel offers native integrations with headless CMS platforms. These let you manage content in a user-friendly dashboard while the site stays fast and developer-friendly.",
+    shortAnswer: "Most modern platforms integrate natively with popular CMS options.",
+    details: "If you ever want non-technical team members to edit content through a visual interface (instead of code), platforms like Vercel, Netlify, and others offer native integrations with headless CMS platforms. These let you manage content in a user-friendly dashboard while the site stays fast and developer-friendly.",
     considerations: [
       "Contentful — Enterprise-grade, great for structured content",
       "Sanity — Flexible, real-time collaboration features",
@@ -320,17 +355,17 @@ export default function HostingComparisonPage() {
           </h1>
           
           <p className="text-xl text-white/90 max-w-2xl mb-4">
-            Comparing GitHub Pages with modern hosting platforms like Vercel—what&apos;s the difference, and what might work best for NatCap TEEMs?
+            Comparing static hosting (GitHub Pages) with modern full-featured platforms—what&apos;s the difference, and what might work best for NatCap TEEMs?
           </p>
 
           <p className="text-base text-white/70 max-w-2xl mb-8">
-            Note: I&apos;m most familiar with Vercel, so I&apos;ll use it as the primary comparison point. However, there are other excellent options out there (Netlify, Cloudflare Pages, etc.)—I&apos;d encourage you to explore all your options before deciding.
+            This comparison uses GitHub Pages and Vercel as examples, but the concepts apply broadly. Platforms like Netlify, Cloudflare Pages, and AWS Amplify offer similar capabilities—explore all options before deciding.
           </p>
 
           {/* Both Free Banner */}
           <div className="inline-flex items-center gap-3 px-5 py-3 bg-[#FFCC33] text-[#7A0019] rounded-lg font-semibold">
             <Check className="h-5 w-5" />
-            <span>Both GitHub Pages and Vercel offer 100% free hosting tiers</span>
+            <span>Most modern hosting platforms offer generous free tiers</span>
           </div>
         </div>
       </section>
@@ -364,28 +399,26 @@ export default function HostingComparisonPage() {
               </p>
             </div>
 
-            {/* Vercel */}
+            {/* Modern Platforms */}
             <div className="p-6 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
               <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 rounded-lg bg-slate-900 dark:bg-white">
-                  <svg viewBox="0 0 116 100" className="h-8 w-8 text-white dark:text-slate-900" fill="currentColor">
-                    <path d="M57.5 0L115 100H0L57.5 0z"/>
-                  </svg>
+                <div className="p-3 rounded-lg bg-gradient-to-br from-slate-800 to-slate-900 dark:from-slate-100 dark:to-white">
+                  <Sparkles className="h-8 w-8 text-white dark:text-slate-900" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">Vercel</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Next.js creators</p>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">Modern Platforms</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Vercel, Netlify, Cloudflare, etc.</p>
                 </div>
               </div>
               <p className="text-slate-600 dark:text-slate-300 text-sm mb-4">
-                Full-featured platform optimized for modern frameworks. Includes serverless functions, edge computing, and more.
+                Full-featured platforms with serverless functions, edge computing, global CDNs, and framework-specific optimizations.
               </p>
               <div className="flex items-center gap-2 text-[#7A0019] dark:text-[#FFCC33] font-semibold text-sm">
                 <Check className="h-4 w-4" />
-                Free (Hobby tier)
+                Free tiers available
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-                Pro tier: $20/user/month
+                Pro tiers: $15-20/user/month typically
               </p>
             </div>
           </div>
@@ -406,30 +439,24 @@ export default function HostingComparisonPage() {
 
           {/* Column Headers */}
           <div className="mb-4 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
-            <div className="grid grid-cols-5 gap-2 px-4 py-3 bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+            <div className="grid grid-cols-3 gap-2 px-4 py-3 bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
               <div className="text-sm font-semibold text-slate-700 dark:text-slate-300"></div>
-              <div className="text-center col-span-2 border-r border-slate-300 dark:border-slate-600 pr-2">
+              <div className="text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <svg viewBox="0 0 16 16" className="h-4 w-4 text-slate-700 dark:text-white" fill="currentColor">
-                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                  </svg>
-                  <span className="text-sm font-semibold text-slate-900 dark:text-white">GitHub Pages</span>
+                  <Server className="h-4 w-4 text-slate-700 dark:text-white" />
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">Static-Only Hosts</span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-xs text-slate-500 dark:text-slate-400">
-                  <span>Free</span>
-                  <span>Team ($4/mo)</span>
+                <div className="text-xs text-slate-500 dark:text-slate-400">
+                  GitHub Pages, GitLab Pages
                 </div>
               </div>
-              <div className="text-center col-span-2 pl-2">
+              <div className="text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <svg viewBox="0 0 116 100" className="h-4 w-4 text-slate-900 dark:text-white" fill="currentColor">
-                    <path d="M57.5 0L115 100H0L57.5 0z"/>
-                  </svg>
-                  <span className="text-sm font-semibold text-slate-900 dark:text-white">Vercel</span>
+                  <Sparkles className="h-4 w-4 text-slate-900 dark:text-white" />
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">Full-Featured Platforms</span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-xs text-slate-500 dark:text-slate-400">
-                  <span>Hobby (Free)</span>
-                  <span>Pro ($20/mo)</span>
+                <div className="text-xs text-slate-500 dark:text-slate-400">
+                  Vercel, Netlify, Cloudflare Pages
                 </div>
               </div>
             </div>
@@ -446,62 +473,34 @@ export default function HostingComparisonPage() {
                   {category.features.map((feature) => (
                     <div 
                       key={feature.name} 
-                      className="grid grid-cols-5 gap-2 px-4 py-3 items-center"
+                      className="grid grid-cols-3 gap-2 px-4 py-3 items-center"
                     >
                       <div className="text-slate-700 dark:text-slate-300 font-medium text-xs">{feature.name}</div>
-                      {/* GitHub Free */}
+                      {/* Static-Only */}
                       <div className="text-center border-l border-slate-100 dark:border-slate-800">
-                        {typeof feature.githubFree === 'boolean' ? (
-                          feature.githubFree ? (
+                        {typeof feature.staticOnly === 'boolean' ? (
+                          feature.staticOnly ? (
                             <Check className="h-4 w-4 mx-auto text-emerald-500" />
                           ) : (
                             <X className="h-4 w-4 mx-auto text-slate-300 dark:text-slate-600" />
                           )
                         ) : (
                           <span className="text-xs text-slate-600 dark:text-slate-400">
-                            {feature.githubFree}
+                            {feature.staticOnly}
                           </span>
                         )}
                       </div>
-                      {/* GitHub Team */}
-                      <div className="text-center border-r border-slate-200 dark:border-slate-700">
-                        {typeof feature.githubTeam === 'boolean' ? (
-                          feature.githubTeam ? (
-                            <Check className="h-4 w-4 mx-auto text-emerald-500" />
-                          ) : (
-                            <X className="h-4 w-4 mx-auto text-slate-300 dark:text-slate-600" />
-                          )
-                        ) : (
-                          <span className="text-xs text-slate-600 dark:text-slate-400">
-                            {feature.githubTeam}
-                          </span>
-                        )}
-                      </div>
-                      {/* Vercel Hobby */}
+                      {/* Full-Featured */}
                       <div className="text-center">
-                        {typeof feature.vercelHobby === 'boolean' ? (
-                          feature.vercelHobby ? (
+                        {typeof feature.fullFeatured === 'boolean' ? (
+                          feature.fullFeatured ? (
                             <Check className="h-4 w-4 mx-auto text-emerald-500" />
                           ) : (
                             <X className="h-4 w-4 mx-auto text-slate-300 dark:text-slate-600" />
                           )
                         ) : (
                           <span className="text-xs text-slate-600 dark:text-slate-400">
-                            {feature.vercelHobby}
-                          </span>
-                        )}
-                      </div>
-                      {/* Vercel Pro */}
-                      <div className="text-center">
-                        {typeof feature.vercelPro === 'boolean' ? (
-                          feature.vercelPro ? (
-                            <Check className="h-4 w-4 mx-auto text-emerald-500" />
-                          ) : (
-                            <X className="h-4 w-4 mx-auto text-slate-300 dark:text-slate-600" />
-                          )
-                        ) : (
-                          <span className="text-xs text-slate-600 dark:text-slate-400">
-                            {feature.vercelPro}
+                            {feature.fullFeatured}
                           </span>
                         )}
                       </div>
@@ -1001,7 +1000,7 @@ export default function HostingComparisonPage() {
         </div>
       </section>
 
-      {/* If You Wanted to Go with Vercel */}
+      {/* Deploying a Quarto Site */}
       <section className="py-16 px-6 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
@@ -1009,10 +1008,10 @@ export default function HostingComparisonPage() {
               <Upload className="h-6 w-6 text-[#7A0019] dark:text-[#FFCC33]" />
             </div>
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">
-              If You Wanted to Go with Vercel
+              Deploying a Quarto Site
             </h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              Here&apos;s what preparing your site for deployment would look like. The process is straightforward and doesn&apos;t require any changes to your existing Quarto project.
+              Here&apos;s what deploying to a modern platform looks like. The process is straightforward and doesn&apos;t require changes to your existing Quarto project.
             </p>
           </div>
 
@@ -1058,23 +1057,36 @@ export default function HostingComparisonPage() {
                     Configure the output directory
                   </h3>
                   <p className="text-slate-600 dark:text-slate-400 mb-4">
-                    Create a <code className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-sm font-mono">vercel.json</code> file in your project root to tell Vercel how to build and where to find your files.
+                    Most platforms need a config file to know where your built files are. The format varies slightly by platform:
                   </p>
-                  <div className="rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
-                    <div className="px-4 py-2 bg-slate-200 dark:bg-slate-700 border-b border-slate-300 dark:border-slate-600 flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-slate-500" />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-300">vercel.json</span>
-                    </div>
-                    <pre className="p-4 bg-slate-900 dark:bg-slate-800 text-sm text-slate-100 overflow-x-auto">
-                      <code>{`{
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
+                      <div className="px-4 py-2 bg-slate-200 dark:bg-slate-700 border-b border-slate-300 dark:border-slate-600 flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-slate-500" />
+                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">vercel.json (Vercel)</span>
+                      </div>
+                      <pre className="p-4 bg-slate-900 dark:bg-slate-800 text-sm text-slate-100 overflow-x-auto">
+                        <code>{`{
   "buildCommand": "quarto render",
   "outputDirectory": "_site"
 }`}</code>
-                    </pre>
+                      </pre>
+                    </div>
+                    <div className="rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
+                      <div className="px-4 py-2 bg-slate-200 dark:bg-slate-700 border-b border-slate-300 dark:border-slate-600 flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-slate-500" />
+                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">netlify.toml (Netlify)</span>
+                      </div>
+                      <pre className="p-4 bg-slate-900 dark:bg-slate-800 text-sm text-slate-100 overflow-x-auto">
+                        <code>{`[build]
+  command = "quarto render"
+  publish = "_site"`}</code>
+                      </pre>
+                    </div>
                   </div>
                   <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
                     <Info className="h-4 w-4 inline mr-1" />
-                    Adjust <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-mono">outputDirectory</code> based on where Quarto outputs your files—could be <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-mono">_site</code>, <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-mono">_book</code>, or <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-mono">docs</code>.
+                    Adjust the output directory based on where Quarto outputs your files—could be <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-mono">_site</code>, <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-mono">_book</code>, or <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-mono">docs</code>.
                   </p>
                 </div>
               </div>
@@ -1088,10 +1100,10 @@ export default function HostingComparisonPage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-slate-900 dark:text-white mb-2 text-lg">
-                    Deploy to Vercel
+                    Connect and Deploy
                   </h3>
                   <p className="text-slate-600 dark:text-slate-400 mb-4">
-                    You have three options to deploy your Quarto site:
+                    Most platforms offer similar deployment options:
                   </p>
                   
                   <div className="grid md:grid-cols-3 gap-4">
@@ -1102,7 +1114,7 @@ export default function HostingComparisonPage() {
                         <span className="font-semibold text-slate-900 dark:text-white text-sm">Git Integration</span>
                       </div>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                        Push to GitHub/GitLab/Bitbucket and connect the repo in Vercel dashboard
+                        Connect your GitHub/GitLab repo and auto-deploy on every push
                       </p>
                       <span className="inline-block px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium">
                         Recommended
@@ -1113,10 +1125,10 @@ export default function HostingComparisonPage() {
                     <div className="p-4 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
                       <div className="flex items-center gap-2 mb-2">
                         <Terminal className="h-4 w-4 text-slate-500 dark:text-slate-400" />
-                        <span className="font-semibold text-slate-900 dark:text-white text-sm">Vercel CLI</span>
+                        <span className="font-semibold text-slate-900 dark:text-white text-sm">CLI Tools</span>
                       </div>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                        Run <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 font-mono">vercel --prod</code> from your project directory
+                        Use platform CLI tools for quick deploys from the command line
                       </p>
                       <span className="inline-block px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 text-xs font-medium">
                         Quick deploys
@@ -1130,7 +1142,7 @@ export default function HostingComparisonPage() {
                         <span className="font-semibold text-slate-900 dark:text-white text-sm">Drag & Drop</span>
                       </div>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                        Just drag your built <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 font-mono">_site</code> folder to Vercel&apos;s dashboard
+                        Drag your built <code className="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 font-mono">_site</code> folder to the platform dashboard
                       </p>
                       <span className="inline-block px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 text-xs font-medium">
                         One-time deploys
@@ -1192,20 +1204,20 @@ export default function HostingComparisonPage() {
         </div>
       </section>
 
-      {/* Alternative Platforms */}
+      {/* Platform Options */}
       <section className="py-16 px-6 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">
-              Other Platforms to Consider
+              Platform Comparison
             </h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              There are several other modern hosting platforms with similar capabilities.
+              Each platform has its strengths. Here&apos;s a quick comparison to help you decide.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {alternativePlatforms.map((platform) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {platformOptions.map((platform) => (
               <a
                 key={platform.name}
                 href={platform.url}
@@ -1217,9 +1229,27 @@ export default function HostingComparisonPage() {
                   <h3 className="font-semibold text-slate-900 dark:text-white">{platform.name}</h3>
                   <ExternalLink className="h-4 w-4 text-slate-400 group-hover:text-[#7A0019] dark:group-hover:text-[#FFCC33] transition-colors" />
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400">{platform.description}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">{platform.description}</p>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {platform.strengths.map((strength) => (
+                    <span key={strength} className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-xs text-slate-600 dark:text-slate-400">
+                      {strength}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400">
+                  <Check className="h-3 w-3" />
+                  <span>{platform.freeHighlight}</span>
+                </div>
               </a>
             ))}
+          </div>
+          
+          <div className="mt-8 p-4 rounded-lg bg-[#7A0019]/5 border border-[#7A0019]/20 text-center">
+            <p className="text-sm text-slate-700 dark:text-slate-300">
+              <strong className="text-[#7A0019] dark:text-[#FFCC33]">Recommendation:</strong> For most academic projects, any of these platforms will work well. 
+              Choose based on your team&apos;s familiarity, specific feature needs, and institutional preferences.
+            </p>
           </div>
         </div>
       </section>
@@ -1227,31 +1257,51 @@ export default function HostingComparisonPage() {
       {/* CTA Section */}
       <section className="py-16 px-6 bg-[#7A0019] text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl font-bold mb-4">Official Documentation</h2>
+          <h2 className="text-2xl font-bold mb-4">Platform Documentation</h2>
           <p className="text-white/80 mb-8">
-            Explore the official documentation for each platform.
+            Explore the official documentation for popular hosting platforms.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+          <div className="flex flex-wrap gap-4 justify-center mb-10">
             <a
               href="https://docs.github.com/pages"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#7A0019] font-semibold rounded-lg hover:bg-slate-100 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white text-[#7A0019] font-semibold rounded-lg hover:bg-slate-100 transition-colors text-sm"
             >
-              <BookOpen className="h-5 w-5" />
-              GitHub Pages Docs
-              <ExternalLink className="h-4 w-4 opacity-50" />
+              <BookOpen className="h-4 w-4" />
+              GitHub Pages
+              <ExternalLink className="h-3 w-3 opacity-50" />
             </a>
             <a
               href="https://vercel.com/docs"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 text-white font-semibold rounded-lg border border-white/20 hover:bg-white/20 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 text-white font-semibold rounded-lg border border-white/20 hover:bg-white/20 transition-colors text-sm"
             >
-              <BookOpen className="h-5 w-5" />
-              Vercel Docs
-              <ExternalLink className="h-4 w-4 opacity-50" />
+              <BookOpen className="h-4 w-4" />
+              Vercel
+              <ExternalLink className="h-3 w-3 opacity-50" />
+            </a>
+            <a
+              href="https://docs.netlify.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 text-white font-semibold rounded-lg border border-white/20 hover:bg-white/20 transition-colors text-sm"
+            >
+              <BookOpen className="h-4 w-4" />
+              Netlify
+              <ExternalLink className="h-3 w-3 opacity-50" />
+            </a>
+            <a
+              href="https://developers.cloudflare.com/pages"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 text-white font-semibold rounded-lg border border-white/20 hover:bg-white/20 transition-colors text-sm"
+            >
+              <BookOpen className="h-4 w-4" />
+              Cloudflare Pages
+              <ExternalLink className="h-3 w-3 opacity-50" />
             </a>
           </div>
 

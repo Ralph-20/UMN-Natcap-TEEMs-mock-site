@@ -3,8 +3,8 @@
 import { useState } from "react"
 import { Search, Lock, Menu, X } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
+import { UMNWordmark } from "./umn-wordmark"
 
 export function UMNHeader() {
   const [searchOpen, setSearchOpen] = useState(false)
@@ -18,16 +18,8 @@ export function UMNHeader() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-12">
             {/* Block M + Wordmark */}
-            <Link href="https://umn.edu" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
-              <Image
-                src="/images/University_of_Minnesota_Logo.svg.png"
-                alt="University of Minnesota"
-                width={1280}
-                height={1280}
-                className="h-8 w-8"
-                priority
-              />
-              <span className="hidden sm:inline font-semibold tracking-tight text-sm">UNIVERSITY OF MINNESOTA</span>
+            <Link href="https://umn.edu" className="flex items-center hover:opacity-90 transition-opacity">
+              <UMNWordmark className="h-7 text-white" />
             </Link>
 
             {/* Right Links */}
