@@ -184,10 +184,10 @@ const comparisonFeatures = [
   {
     category: "Infrastructure",
     features: [
-      { name: "Global CDN", staticOnly: "Limited regions", fullFeatured: "200-300+ PoPs" },
+      { name: "Global CDN", staticOnly: "Limited regions", fullFeatured: true },
+      { name: "Global Firewall / DDoS Protection", staticOnly: true, fullFeatured: true },
       { name: "Custom Domains", staticOnly: true, fullFeatured: true },
       { name: "SSL Certificates", staticOnly: true, fullFeatured: true },
-      { name: "DDoS Protection", staticOnly: true, fullFeatured: true },
     ]
   }
 ]
@@ -198,21 +198,21 @@ const platformOptions = [
     name: "Vercel", 
     url: "https://vercel.com", 
     description: "Optimized for Next.js, excellent DX, generous free tier",
-    strengths: ["Next.js optimization", "Preview deployments", "Edge functions"],
+    strengths: ["Next.js optimization", "Global CDN & firewall", "Edge functions"],
     freeHighlight: "100GB bandwidth/mo"
   },
   { 
     name: "Netlify", 
     url: "https://netlify.com", 
     description: "Pioneer of JAMstack, excellent CI/CD and form handling",
-    strengths: ["Form handling", "Split testing", "Identity/auth"],
+    strengths: ["Global CDN & firewall", "Form handling", "Split testing"],
     freeHighlight: "100GB bandwidth/mo"
   },
   { 
     name: "Cloudflare Pages", 
     url: "https://pages.cloudflare.com", 
     description: "Global edge network with very generous free tier",
-    strengths: ["Global CDN", "Unlimited bandwidth (free)", "Workers integration"],
+    strengths: ["Global CDN & firewall", "Unlimited bandwidth (free)", "Workers integration"],
     freeHighlight: "Unlimited bandwidth"
   },
   { 
